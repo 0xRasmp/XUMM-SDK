@@ -107,7 +107,7 @@ export class Payload {
       callbackPromise.promise.then(() => {
         clearTimeout(keepAlivePing)
         clearTimeout(keepAliveReinstateTimer)
-        socket.close()
+        socket.close(1000)
       })
 
       const connect = () => {
@@ -192,6 +192,7 @@ export class Payload {
 
           // Reconnect
           if (_e.code > 1000 || _e.wasClean === false) {
+            console.log(_e)
             logWs('Unhealthy disconnect, reconnecting...', _e.code)
             if (reconnectAttempts < maxSocketConnectAttempts) {
               if (reconnectAttempts === 0) {
